@@ -181,21 +181,21 @@ namespace InventorFlatExport
 
                             // Bend Up Layer
                             //+ "&BendUpLayer=BENDLINES_UP"
-                            + "&BendUpLayer=BendingLines"
+                            + "&BendUpLayer=not_used"
                             + "&BendUpLayerColor=0;0;255"
                             + "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Bend Down Layer
                             //+ "&BendDownLayer=BENDLINES_DOWN"
-                            + "&BendUpLayer=BendingLines"
+                            + "&BendUpLayer=not_used"
                             + "&BendDownLayerColor=255;0;191"
                             + "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Layers to hide
-                            + "&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND;IV_BEND_DOWN;IV_UNCONSUMED_SKETCHES;BENDLINES_UP;BENDLINES_DOWN"
-                            
+                            + "&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND;IV_BEND_DOWN;IV_UNCONSUMED_SKETCHES;not_used"
+
                             // Other Export Settings
-                            + "&MergeProfilesIntoPolyline=True"
+                            //+ "&MergeProfilesIntoPolyline=True"
                             //+ "&SimplifySplines=True"
                             //+ "&AdvancedLegacyExport=True"
                             //+ "&SplineTolerance=0.01"
@@ -215,11 +215,32 @@ namespace InventorFlatExport
                 // read DXF and add bend lines
                 var file = DxfFile.Load(dxfOutPath);
                 file.Header.Version = DxfAcadVersion.R2007;
-                file.ApplicationIds.Add(new DxfAppId("POS3000"));
+                file.ApplicationIds.Add(new DxfAppId("POS3000_V3_PRODUCT"));
+                file.ApplicationIds.Add(new DxfAppId("POS3000_V3_BENDINGLINE"));
 
                 // convert from internal units (CM) to document units
                 double toDocUnits(double value) {
                     return docUnits.ConvertUnits(value, UnitsTypeEnum.kCentimeterLengthUnits, docUnits.LengthUnits);
+                }
+
+
+                // get sheet thickness from model
+                var sheetThickness = toDocUnits(smCompDef.Thickness.Value);
+                var materialName = smCompDef.Material.Name;
+
+                // ToDo: Find a better way to get the Outline layer
+                foreach (DxfLayer layer in file.Layers) {
+
+                    if (layer.Name == "Outline") {
+
+                        // add XData with product info
+                        layer.XData["POS3000_V3_PRODUCT"] = new DxfXDataApplicationItemCollection(
+                            new DxfXDataString(String.Format("Thickness={0:F4}", sheetThickness)),
+                            new DxfXDataString(String.Format("MaterialId=({0})", materialName))
+                        );
+
+                    }
+
                 }
 
 
@@ -231,7 +252,7 @@ namespace InventorFlatExport
                     var bAngle = oBend.Angle * 180 / Math.PI;
 
                     // down bends have a negative bend angle
-                    if (!oBend.IsDirectionUp) bAngle *= -1.0;
+                    if (oBend.IsDirectionUp) bAngle *= -1.0;
 
                     var bRadius = toDocUnits(oBend.InnerRadius);
 
@@ -259,17 +280,12 @@ namespace InventorFlatExport
                     y2 = (1 - t) * y1 + t * y2;
 
                     // create new line on BENDLINES layer
-                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer="BENDLINES", LineTypeName="Dashed", ColorName="red"};
-
-                    //bLine.LineTypeName = "Dashed"; 
-                    //DxfLineTypeStyle.DoubleLongDash
-
+                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer= "BendingLines", LineTypeName="Dashed", ColorName="red"};
 
                     // add XData with bend info
-                    bLine.XData["POS3000"] = new DxfXDataApplicationItemCollection(
-                        new DxfXDataString(String.Format("BendAngle:{0:F3}", bAngle)),
-                        new DxfXDataString(String.Format("BendRadius:{0:F4}", bRadius)),
-                        new DxfXDataString(String.Format("MaterialThk:{0:F4}", bRadius))
+                    bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
+                        new DxfXDataString(String.Format("BendAngleDeg={0:F3}", bAngle)),
+                        new DxfXDataString(String.Format("InnerRadius={0:F4}", bRadius))
                     );
 
                     // add bend line to DXF
