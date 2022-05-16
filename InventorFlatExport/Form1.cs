@@ -1,4 +1,4 @@
-// MetalForming Inc.
+﻿// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -154,7 +154,16 @@ namespace InventorFlatExport
                 // Unfold if we don't already have a flat pattern
                 if (!smCompDef.HasFlatPattern)
                 {
-                    smCompDef.Unfold();
+                    try
+                    {
+                        smCompDef.Unfold();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Inventor encountered an error while unfolding the part.\n"
+                                      + "Please correct the issue with the model and try again.", "Unfold error!");
+                        return;
+                    }
                 }
 
                 // set export length units
