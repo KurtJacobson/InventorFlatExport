@@ -1,4 +1,4 @@
-﻿// MetalForming Inc.
+// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -47,9 +47,7 @@ namespace InventorFlatExport
             try
             {
                 inventor = (Inventor.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Inventor.Application");
-                
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Make sure AutoDesk Inventor is installed and running.", "Inventor Error!");
@@ -168,25 +166,21 @@ namespace InventorFlatExport
 
                 string sOut = "FLAT PATTERN DXF?AcadVersion=2007"
                             // Outer Profile Layer
-                            //+ "&OuterProfileLayer=OUTER_PROFILE"
                             + "&OuterProfileLayer=Outline"
                             + "&OuterProfileLayerColor=0;0;0"
                             + "&OuterProfileLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Interior Profile Layer
-                            //+ "&InteriorProfilesLayer=INNER_PROFILES"
                             + "&InteriorProfilesLayer=InnerOutlines"
                             + "&InteriorProfilesLayerColor=0;0;0"
                             + "&InteriorProfilesLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Bend Up Layer
-                            //+ "&BendUpLayer=BENDLINES_UP"
                             + "&BendUpLayer=not_used"
                             + "&BendUpLayerColor=0;0;255"
                             + "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Bend Down Layer
-                            //+ "&BendDownLayer=BENDLINES_DOWN"
                             + "&BendUpLayer=not_used"
                             + "&BendDownLayerColor=255;0;191"
                             + "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
