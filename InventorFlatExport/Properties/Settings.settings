@@ -1,7 +1,42 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="InventorFlatExport.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OuterProfileLineType" Type="Inventor.LineTypeEnum" Scope="User">
+      <Value Profile="(Default)">kDefaultLineType</Value>
+    </Setting>
+    <Setting Name="InteriorProfilesLayer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">InnerOutlines</Value>
+    </Setting>
+    <Setting Name="OuterProfileLayer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Outline</Value>
+    </Setting>
+    <Setting Name="OuterProfileLayerColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="InteriorProfilesLayerColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Green</Value>
+    </Setting>
+    <Setting Name="InteriorProfilesLineType" Type="Inventor.LineTypeEnum" Scope="User">
+      <Value Profile="(Default)">kDefaultLineType</Value>
+    </Setting>
+    <Setting Name="BendUpLayer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BendingLines</Value>
+    </Setting>
+    <Setting Name="BendUpLayerColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Blue</Value>
+    </Setting>
+    <Setting Name="BendUpLineType" Type="Inventor.LineTypeEnum" Scope="User">
+      <Value Profile="(Default)">kDashedLineType</Value>
+    </Setting>
+    <Setting Name="BendDownLayer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BendingLines</Value>
+    </Setting>
+    <Setting Name="BendDownLayerColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Magenta</Value>
+    </Setting>
+    <Setting Name="BendDownLineType" Type="Inventor.LineTypeEnum" Scope="User">
+      <Value Profile="(Default)">kDashedLineType</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

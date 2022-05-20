@@ -39,6 +39,15 @@ namespace InventorFlatExport
             InitInventor(btn);
         }
 
+
+        private string colorToRgb(System.Drawing.Color color)
+        {
+
+            return String.Format("{0};{1};{2}", color.R, color.G, color.B);
+
+        }
+
+
         private void InitInventor(Button button)
         {
 
@@ -176,23 +185,23 @@ namespace InventorFlatExport
                 string sOut = "FLAT PATTERN DXF?AcadVersion=2007"
                             // Outer Profile Layer
                             + "&OuterProfileLayer=Outline"
-                            + "&OuterProfileLayerColor=0;0;0"
+                            + "&OuterProfileLayerColor=" + colorToRgb(Properties.Settings.Default.OuterProfileLayerColor)
                             + "&OuterProfileLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Interior Profile Layer
                             + "&InteriorProfilesLayer=InnerOutlines"
-                            + "&InteriorProfilesLayerColor=0;0;0"
+                            + "&InteriorProfilesLayerColor=" + colorToRgb(Properties.Settings.Default.InteriorProfilesLayerColor)
                             + "&InteriorProfilesLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Bend Up Layer
-                            + "&BendUpLayer=not_used"
-                            + "&BendUpLayerColor=0;0;255"
-                            + "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
+                            //+ "&BendUpLayer=not_used"
+                            //+ "&BendUpLayerColor=0;0;255"
+                            //+ "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Bend Down Layer
-                            + "&BendUpLayer=not_used"
-                            + "&BendDownLayerColor=255;0;191"
-                            + "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
+                            //+ "&BendDownLayer=not_used"
+                            //+ "&BendDownLayerColor=255;0;191"
+                            //+ "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Layers to hide
                             + "&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND;IV_BEND_DOWN;IV_UNCONSUMED_SKETCHES;not_used"
@@ -226,7 +235,6 @@ namespace InventorFlatExport
                     return docUnits.ConvertUnits(value, UnitsTypeEnum.kCentimeterLengthUnits, docUnits.LengthUnits);
                 }
 
-
                 // get sheet thickness from model
                 var sheetThickness = toDocUnits(smCompDef.Thickness.Value);
                 var materialName = smCompDef.Material.Name;
@@ -247,6 +255,10 @@ namespace InventorFlatExport
                 }
 
 
+                var bUpLineColor = Properties.Settings.Default.BendUpLayerColor.ToArgb();
+                var bDownLineColor = Properties.Settings.Default.BendDownLayerColor.ToArgb();
+
+
                 foreach (FlatBendResult oBend in fPatt.FlatBendResults) {
 
                     // we only want bends on the top face, so continue if on bottom face
@@ -254,8 +266,16 @@ namespace InventorFlatExport
 
                     var bAngle = oBend.Angle * 180 / Math.PI;
 
-                    // down bends have a negative bend angle
-                    if (oBend.IsDirectionUp) bAngle *= -1.0;
+                    var bLineColor = bUpLineColor;
+                    // down bends have a negative bend angle, and different color
+                    if (oBend.IsDirectionUp)
+                    {
+
+                        bAngle *= -1.0;
+                        bLineColor = bDownLineColor;
+
+                    }
+
 
                     var bRadius = toDocUnits(oBend.InnerRadius);
 
@@ -283,7 +303,7 @@ namespace InventorFlatExport
                     y2 = (1 - t) * y1 + t * y2;
 
                     // create new line on BENDLINES layer
-                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer= "BendingLines", LineTypeName="Dashed", ColorName="red"};
+                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer= "BendingLines", LineTypeName="Dashed", Color24Bit=bLineColor};
 
                     // add XData with bend info
                     bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
