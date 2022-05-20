@@ -39,6 +39,15 @@ namespace InventorFlatExport
             InitInventor(btn);
         }
 
+
+        private string colorToRgb(System.Drawing.Color color)
+        {
+
+            return String.Format("{0};{1};{2}", color.R, color.G, color.B);
+
+        }
+
+
         private void InitInventor(Button button)
         {
 
@@ -47,9 +56,7 @@ namespace InventorFlatExport
             try
             {
                 inventor = (Inventor.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Inventor.Application");
-                
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Make sure AutoDesk Inventor is installed and running.", "Inventor Error!");
@@ -156,7 +163,16 @@ namespace InventorFlatExport
                 // Unfold if we don't already have a flat pattern
                 if (!smCompDef.HasFlatPattern)
                 {
-                    smCompDef.Unfold();
+                    try
+                    {
+                        smCompDef.Unfold();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Inventor encountered an error while unfolding the part.\n"
+                                      + "Please correct the issue with the model and try again.", "Unfold error!");
+                        return;
+                    }
                 }
 
                 // set export length units
@@ -168,30 +184,30 @@ namespace InventorFlatExport
 
                 string sOut = "FLAT PATTERN DXF?AcadVersion=2007"
                             // Outer Profile Layer
-                            + "&OuterProfileLayer=OUTER_PROFILE"
-                            + "&OuterProfileLayerColor=0;0;0"
+                            + "&OuterProfileLayer=Outline"
+                            + "&OuterProfileLayerColor=" + colorToRgb(Properties.Settings.Default.OuterProfileLayerColor)
                             + "&OuterProfileLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Interior Profile Layer
-                            + "&InteriorProfilesLayer=INNER_PROFILES"
-                            + "&InteriorProfilesLayerColor=0;0;0"
+                            + "&InteriorProfilesLayer=InnerOutlines"
+                            + "&InteriorProfilesLayerColor=" + colorToRgb(Properties.Settings.Default.InteriorProfilesLayerColor)
                             + "&InteriorProfilesLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Bend Up Layer
-                            + "&BendUpLayer=BENDLINES_UP"
-                            + "&BendUpLayerColor=0;0;255"
-                            + "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
+                            //+ "&BendUpLayer=not_used"
+                            //+ "&BendUpLayerColor=0;0;255"
+                            //+ "&BendUpLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Bend Down Layer
-                            + "&BendDownLayer=BENDLINES_DOWN"
-                            + "&BendDownLayerColor=255;0;191"
-                            + "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
+                            //+ "&BendDownLayer=not_used"
+                            //+ "&BendDownLayerColor=255;0;191"
+                            //+ "&BendDownLineType=" + ((decimal)LineTypeEnum.kDashedLineType)
 
                             // Layers to hide
-                            + "&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND;IV_BEND_DOWN;IV_UNCONSUMED_SKETCHES;BENDLINES_UP;BENDLINES_DOWN"
-                            
+                            + "&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND;IV_BEND_DOWN;IV_UNCONSUMED_SKETCHES;not_used"
+
                             // Other Export Settings
-                            + "&MergeProfilesIntoPolyline=True"
+                            //+ "&MergeProfilesIntoPolyline=True"
                             //+ "&SimplifySplines=True"
                             //+ "&AdvancedLegacyExport=True"
                             //+ "&SplineTolerance=0.01"
@@ -211,12 +227,36 @@ namespace InventorFlatExport
                 // read DXF and add bend lines
                 var file = DxfFile.Load(dxfOutPath);
                 file.Header.Version = DxfAcadVersion.R2007;
-                file.ApplicationIds.Add(new DxfAppId("POS3000"));
+                file.ApplicationIds.Add(new DxfAppId("POS3000_V3_PRODUCT"));
+                file.ApplicationIds.Add(new DxfAppId("POS3000_V3_BENDINGLINE"));
 
                 // convert from internal units (CM) to document units
                 double toDocUnits(double value) {
                     return docUnits.ConvertUnits(value, UnitsTypeEnum.kCentimeterLengthUnits, docUnits.LengthUnits);
                 }
+
+                // get sheet thickness from model
+                var sheetThickness = toDocUnits(smCompDef.Thickness.Value);
+                var materialName = smCompDef.Material.Name;
+
+                // ToDo: Find a better way to get the Outline layer
+                foreach (DxfLayer layer in file.Layers) {
+
+                    if (layer.Name == "Outline") {
+
+                        // add XData with product info
+                        layer.XData["POS3000_V3_PRODUCT"] = new DxfXDataApplicationItemCollection(
+                            new DxfXDataString(String.Format("Thickness={0:F4}", sheetThickness)),
+                            new DxfXDataString(String.Format("MaterialId=({0})", materialName))
+                        );
+
+                    }
+
+                }
+
+
+                var bUpLineColor = Properties.Settings.Default.BendUpLayerColor.ToArgb();
+                var bDownLineColor = Properties.Settings.Default.BendDownLayerColor.ToArgb();
 
 
                 foreach (FlatBendResult oBend in fPatt.FlatBendResults) {
@@ -226,8 +266,16 @@ namespace InventorFlatExport
 
                     var bAngle = oBend.Angle * 180 / Math.PI;
 
-                    // down bends have a negative bend angle
-                    if (!oBend.IsDirectionUp) bAngle *= -1.0;
+                    var bLineColor = bUpLineColor;
+                    // down bends have a negative bend angle, and different color
+                    if (oBend.IsDirectionUp)
+                    {
+
+                        bAngle *= -1.0;
+                        bLineColor = bDownLineColor;
+
+                    }
+
 
                     var bRadius = toDocUnits(oBend.InnerRadius);
 
@@ -255,17 +303,12 @@ namespace InventorFlatExport
                     y2 = (1 - t) * y1 + t * y2;
 
                     // create new line on BENDLINES layer
-                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer="BENDLINES", LineTypeName="Dashed", ColorName="red"};
-
-                    //bLine.LineTypeName = "Dashed"; 
-                    //DxfLineTypeStyle.DoubleLongDash
-
+                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer= "BendingLines", LineTypeName="Dashed", Color24Bit=bLineColor};
 
                     // add XData with bend info
-                    bLine.XData["POS3000"] = new DxfXDataApplicationItemCollection(
-                        new DxfXDataString(String.Format("BendAngle:{0:F3}", bAngle)),
-                        new DxfXDataString(String.Format("BendRadius:{0:F4}", bRadius)),
-                        new DxfXDataString(String.Format("MaterialThk:{0:F4}", bRadius))
+                    bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
+                        new DxfXDataString(String.Format("BendAngleDeg={0:F3}", bAngle)),
+                        new DxfXDataString(String.Format("InnerRadius={0:F4}", bRadius))
                     );
 
                     // add bend line to DXF
