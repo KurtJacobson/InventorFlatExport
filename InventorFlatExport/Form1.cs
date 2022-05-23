@@ -1,4 +1,4 @@
-// MetalForming Inc.
+﻿// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -264,6 +264,7 @@ namespace InventorFlatExport
 
                 var bUpLineColor = Properties.Settings.Default.BendUpLayerColor.ToArgb();
                 var bDownLineColor = Properties.Settings.Default.BendDownLayerColor.ToArgb();
+                var bLineType = "Dashed";
 
 
                 foreach (FlatBendResult oBend in fPatt.FlatBendResults) {
@@ -272,20 +273,26 @@ namespace InventorFlatExport
                     if (oBend.IsOnBottomFace) continue;
 
                     var bAngle = oBend.Angle * 180 / Math.PI;
+                    var bRadius = toDocUnits(oBend.InnerRadius);
 
                     var bLineColor = bUpLineColor;
+
                     // down bends have a negative bend angle, and different color
                     if (oBend.IsDirectionUp)
                     {
-
                         bAngle *= -1.0;
                         bLineColor = bDownLineColor;
-
                     }
 
-
-                    var bRadius = toDocUnits(oBend.InnerRadius);
-
+                    // different line type for regular bends and hems
+                    if (Math.Abs(bAngle) > 179 )
+                    {
+                        bLineType = "Divide";
+                    }
+                    else
+                    {
+                        bLineType = "Dashed";
+                    }
 
                     Point startPoint = oBend.Edge.StartVertex.Point;
                     Point stopPoint = oBend.Edge.StopVertex.Point;
@@ -310,7 +317,11 @@ namespace InventorFlatExport
                     y2 = (1 - t) * y1 + t * y2;
 
                     // create new line on BENDLINES layer
-                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) { Layer= "BendingLines", LineTypeName="Dashed", Color24Bit=bLineColor};
+                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) {
+                        Layer= "BendingLines",
+                        LineTypeName=bLineType, 
+                        Color24Bit=bLineColor
+                    };
 
                     // add XData with bend info
                     bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
