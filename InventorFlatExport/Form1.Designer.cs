@@ -49,6 +49,7 @@
             this.labelPartPath = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.dXFExportSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -96,18 +97,20 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dXFExportSettingsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -225,6 +228,13 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Inventor Parts";
             // 
+            // dXFExportSettingsToolStripMenuItem
+            // 
+            this.dXFExportSettingsToolStripMenuItem.Name = "dXFExportSettingsToolStripMenuItem";
+            this.dXFExportSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dXFExportSettingsToolStripMenuItem.Text = "DXF Export Settings";
+            this.dXFExportSettingsToolStripMenuItem.Click += new System.EventHandler(this.dXFExportSettingsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,6 +282,7 @@
         private System.Windows.Forms.Label labelPartOccur;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonExportDxf;
+        private System.Windows.Forms.ToolStripMenuItem dXFExportSettingsToolStripMenuItem;
     }
 }
 

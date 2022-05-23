@@ -376,6 +376,12 @@ namespace InventorFlatExport
             // close out the form
             this.Close();
         }
+
+        private void dXFExportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormDxfSettings settingsForm = new FormDxfSettings();
+            settingsForm.ShowDialog();
+        }
     }
 }
 
