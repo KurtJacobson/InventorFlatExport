@@ -1,4 +1,4 @@
-﻿// MetalForming Inc.
+// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -143,6 +143,8 @@ namespace InventorFlatExport
 
         {
 
+            SheetMetalComponentDefinition smCompDef = null;
+
             if (oDoc == null)
             {
                 MessageBox.Show("Part document is null.", "Export error!");
@@ -152,13 +154,18 @@ namespace InventorFlatExport
             {
                 Console.WriteLine("Is Inventor Part document");
 
-                if (oDoc.SubType == "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}");
+                if (oDoc.SubType == "{9C464203-9BAE-11D3-8BAD-0060B0CE6BB4}")
                 {
                     Console.WriteLine("Is sheet metal component!");
-                }
 
-                // we MUST class as a sheet metal comp def
-                SheetMetalComponentDefinition smCompDef = (SheetMetalComponentDefinition)oDoc.ComponentDefinition;
+                    // we MUST class as a sheet metal comp def
+                    smCompDef = (SheetMetalComponentDefinition)oDoc.ComponentDefinition;
+                }
+                else
+                {
+                    MessageBox.Show("The selected item is not a valid Sheetmetal component.", "Export Error!");
+                    return;
+                }
 
                 // Unfold if we don't already have a flat pattern
                 if (!smCompDef.HasFlatPattern)
