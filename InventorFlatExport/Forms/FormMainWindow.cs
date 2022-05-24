@@ -20,13 +20,13 @@ using InventorFlatExport.Custom_Controls;
 
 namespace InventorFlatExport
 {
-    public partial class Form1 : Form
+    public partial class FormMainWindow : Form
     {
 
         Inventor.Application inventor = null;
         IDictionary<string, SheetmetalPart> partDict = new Dictionary<string, SheetmetalPart>();
 
-        public Form1()
+        public FormMainWindow()
         {
             InitializeComponent();
 
