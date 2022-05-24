@@ -33,8 +33,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.colorPicker1 = new InventorFlatExport.Custom_Controls.ColorComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.colorPicker1 = new InventorFlatExport.Custom_Controls.ColorComboBox();
+            this.lineTypeComboBox1 = new InventorFlatExport.Custom_Controls.LineTypeComboBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -65,7 +65,7 @@
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 107);
+            this.groupBox1.Size = new System.Drawing.Size(303, 107);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Outer Profile";
@@ -78,10 +78,10 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.lineTypeComboBox1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.colorPicker1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
@@ -97,7 +97,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(272, 82);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(291, 82);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label3
@@ -133,22 +133,25 @@
             this.label1.Text = "Line Type";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // colorPicker1
+            // 
+            this.colorPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorPicker1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.colorPicker1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.colorPicker1.FormattingEnabled = true;
+            this.colorPicker1.Location = new System.Drawing.Point(73, 29);
+            this.colorPicker1.Name = "colorPicker1";
+            this.colorPicker1.SelectedValue = System.Drawing.Color.White;
+            this.colorPicker1.Size = new System.Drawing.Size(215, 21);
+            this.colorPicker1.TabIndex = 10;
+            // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(73, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(208, 20);
+            this.textBox1.Size = new System.Drawing.Size(215, 20);
             this.textBox1.TabIndex = 7;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(73, 57);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(208, 21);
-            this.comboBox1.TabIndex = 9;
             // 
             // groupBox2
             // 
@@ -346,17 +349,17 @@
             this.comboBox3.Size = new System.Drawing.Size(196, 21);
             this.comboBox3.TabIndex = 9;
             // 
-            // colorPicker1
+            // lineTypeComboBox1
             // 
-            this.colorPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorPicker1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.colorPicker1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.colorPicker1.FormattingEnabled = true;
-            this.colorPicker1.Location = new System.Drawing.Point(73, 29);
-            this.colorPicker1.Name = "colorPicker1";
-            this.colorPicker1.SelectedValue = System.Drawing.Color.White;
-            this.colorPicker1.Size = new System.Drawing.Size(208, 21);
-            this.colorPicker1.TabIndex = 10;
+            this.lineTypeComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineTypeComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lineTypeComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.lineTypeComboBox1.FormattingEnabled = true;
+            this.lineTypeComboBox1.Location = new System.Drawing.Point(73, 57);
+            this.lineTypeComboBox1.Name = "lineTypeComboBox1";
+            this.lineTypeComboBox1.SelectedValue = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.lineTypeComboBox1.Size = new System.Drawing.Size(215, 21);
+            this.lineTypeComboBox1.TabIndex = 3;
             // 
             // FormDxfSettings
             // 
@@ -391,7 +394,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label2;
@@ -409,5 +411,6 @@
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.ComboBox comboBox3;
         private Custom_Controls.ColorComboBox colorPicker1;
+        private Custom_Controls.LineTypeComboBox lineTypeComboBox1;
     }
 }

@@ -83,6 +83,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom Controls\LineTypeComboBox.cs">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Custom Controls\LineTypeComboBox.Designer.cs">
+      <DependentUpon>LineTypeComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Custom Controls\ColorComboBox.cs">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -104,6 +111,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Custom Controls\LineTypeComboBox.resx">
+      <DependentUpon>LineTypeComboBox.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Custom Controls\ColorComboBox.resx">
       <DependentUpon>ColorComboBox.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
