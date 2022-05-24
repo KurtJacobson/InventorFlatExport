@@ -95,9 +95,6 @@ namespace InventorFlatExport.Custom_Controls
             }
         }
 
-        /// <summary>
-        /// Gets or sets the currently selected item.
-        /// </summary>
         public new ColorInfo SelectedItem
         {
             get
@@ -110,10 +107,6 @@ namespace InventorFlatExport.Custom_Controls
             }
         }
 
-        /// <summary>
-        /// Gets the text of the selected item, or sets the selection to
-        /// the item with the specified text.
-        /// </summary>
         public new string SelectedText
         {
             get
@@ -135,10 +128,6 @@ namespace InventorFlatExport.Custom_Controls
             }
         }
 
-        /// <summary>
-        /// Gets the value of the selected item, or sets the selection to
-        /// the item with the specified value.
-        /// </summary>
         public new Color SelectedValue
         {
             get
