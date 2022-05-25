@@ -1,4 +1,4 @@
-// MetalForming Inc.
+﻿// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -256,9 +256,15 @@ namespace InventorFlatExport
                 }
 
 
-                var bUpLineColor = Properties.Settings.Default.BendUpLayerColor.ToArgb();
-                var bDownLineColor = Properties.Settings.Default.BendDownLayerColor.ToArgb();
+                var bUpLineColor = Properties.DxfSettings.Default.BendUpLayerColor.ToArgb();
+                var bDownLineColor = Properties.DxfSettings.Default.BendDownLayerColor.ToArgb();
                 var bLineType = "Dashed";
+
+                // Add dashed line type to DXF
+                var dashedLineType = new DxfLineType("test");
+                dashedLineType.Elements.Add(new DxfLineTypeElement() { DashDotSpaceLength = .5});
+                dashedLineType.Elements.Add(new DxfLineTypeElement() { DashDotSpaceLength = .25});
+                file.LineTypes.Add(dashedLineType);
 
 
                 foreach (FlatBendResult oBend in fPatt.FlatBendResults) {
@@ -311,11 +317,10 @@ namespace InventorFlatExport
                     y2 = (1 - t) * y1 + t * y2;
 
                     // create new line on BENDLINES layer
-                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0)) {
-                        Layer= "BendingLines",
-                        LineTypeName=bLineType, 
-                        Color24Bit=bLineColor
-                    };
+                    var bLine = new DxfLine(new DxfPoint(x1, y1, 0.0), new DxfPoint(x2, y2, 0.0));
+                    bLine.LineTypeName = bLineType;
+                    bLine.Color24Bit = bLineColor;
+                    bLine.Layer = "BendingLines";
 
                     // add XData with bend info
                     bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(

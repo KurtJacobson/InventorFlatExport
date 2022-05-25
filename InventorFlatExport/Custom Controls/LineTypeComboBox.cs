@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -60,10 +60,13 @@ namespace InventorFlatExport.Custom_Controls
                 Point p1 = new Point(e.Bounds.Left + 5, e.Bounds.Y + e.Bounds.Height / 2);
                 Point p2 = new Point(e.Bounds.Left + 70, e.Bounds.Y + e.Bounds.Height / 2);
 
-                using (Pen DashDot = new Pen(e.ForeColor, 1))
+                using (Pen linePen = new Pen(e.ForeColor, 1))
                 {
-                    DashDot.DashStyle = lineStyle.Style;
-                    e.Graphics.DrawLine(DashDot, p1, p2);
+
+                    float[] dashLengths = { 10, 1, 1, 1, };
+                    linePen.DashPattern = dashLengths;
+                    //DashDot.DashStyle = lineStyle.Style;
+                    e.Graphics.DrawLine(linePen, p1, p2);
                 }
 
                 // Write line style name
