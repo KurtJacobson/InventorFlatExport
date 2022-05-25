@@ -185,13 +185,13 @@ namespace InventorFlatExport
 
                 string sOut = "FLAT PATTERN DXF?AcadVersion=2007"
                             // Outer Profile Layer
-                            + "&OuterProfileLayer=Outline"
-                            + "&OuterProfileLayerColor=" + colorToRgb(Properties.Settings.Default.OuterProfileLayerColor)
+                            + "&OuterProfileLayer=" + Properties.DxfSettings.Default.OuterProfileLayer
+                            + "&OuterProfileLayerColor=" + colorToRgb(Properties.DxfSettings.Default.OuterProfileLayerColor)
                             + "&OuterProfileLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Interior Profile Layer
                             + "&InteriorProfilesLayer=InnerOutlines"
-                            + "&InteriorProfilesLayerColor=" + colorToRgb(Properties.Settings.Default.InteriorProfilesLayerColor)
+                            + "&InteriorProfilesLayerColor=" + colorToRgb(Properties.DxfSettings.Default.InteriorProfilesLayerColor)
                             + "&InteriorProfilesLineType=" + ((decimal)LineTypeEnum.kDefaultLineType)
 
                             // Bend Up Layer

@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbOuterProfileLayer = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,12 +46,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.lineTypeComboBox3 = new InventorFlatExport.Custom_Controls.LineTypeComboBox();
             this.colorComboBox2 = new InventorFlatExport.Custom_Controls.ColorComboBox();
             this.lineTypeComboBox2 = new InventorFlatExport.Custom_Controls.LineTypeComboBox();
             this.colorComboBox1 = new InventorFlatExport.Custom_Controls.ColorComboBox();
-            this.lineTypeComboBox1 = new InventorFlatExport.Custom_Controls.LineTypeComboBox();
-            this.colorPicker1 = new InventorFlatExport.Custom_Controls.ColorComboBox();
+            this.cbOuterProfileLineType = new InventorFlatExport.Custom_Controls.LineTypeComboBox();
+            this.cbOuterProfileLineColor = new InventorFlatExport.Custom_Controls.ColorComboBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,12 +80,12 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.lineTypeComboBox1, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.cbOuterProfileLineType, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.colorPicker1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cbOuterProfileLineColor, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbOuterProfileLayer, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -133,13 +135,13 @@
             this.label1.Text = "Line Type";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBox1
+            // tbOuterProfileLayer
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(73, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(215, 20);
-            this.textBox1.TabIndex = 7;
+            this.tbOuterProfileLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbOuterProfileLayer.Location = new System.Drawing.Point(73, 3);
+            this.tbOuterProfileLayer.Name = "tbOuterProfileLayer";
+            this.tbOuterProfileLayer.Size = new System.Drawing.Size(215, 20);
+            this.tbOuterProfileLayer.TabIndex = 7;
             // 
             // groupBox2
             // 
@@ -303,6 +305,26 @@
             this.textBox3.Size = new System.Drawing.Size(215, 20);
             this.textBox3.TabIndex = 7;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(159, 351);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(240, 351);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // lineTypeComboBox3
             // 
             this.lineTypeComboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -351,36 +373,39 @@
             this.colorComboBox1.Size = new System.Drawing.Size(215, 21);
             this.colorComboBox1.TabIndex = 10;
             // 
-            // lineTypeComboBox1
+            // cbOuterProfileLineType
             // 
-            this.lineTypeComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineTypeComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.lineTypeComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.lineTypeComboBox1.FormattingEnabled = true;
-            this.lineTypeComboBox1.Location = new System.Drawing.Point(73, 57);
-            this.lineTypeComboBox1.Name = "lineTypeComboBox1";
-            this.lineTypeComboBox1.SelectedValue = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.lineTypeComboBox1.Size = new System.Drawing.Size(215, 21);
-            this.lineTypeComboBox1.TabIndex = 3;
+            this.cbOuterProfileLineType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOuterProfileLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbOuterProfileLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOuterProfileLineType.FormattingEnabled = true;
+            this.cbOuterProfileLineType.Location = new System.Drawing.Point(73, 57);
+            this.cbOuterProfileLineType.Name = "cbOuterProfileLineType";
+            this.cbOuterProfileLineType.SelectedValue = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.cbOuterProfileLineType.Size = new System.Drawing.Size(215, 21);
+            this.cbOuterProfileLineType.TabIndex = 3;
             // 
-            // colorPicker1
+            // cbOuterProfileLineColor
             // 
-            this.colorPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorPicker1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.colorPicker1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.colorPicker1.FormattingEnabled = true;
-            this.colorPicker1.Location = new System.Drawing.Point(73, 29);
-            this.colorPicker1.Name = "colorPicker1";
-            this.colorPicker1.SelectedValue = System.Drawing.Color.White;
-            this.colorPicker1.Size = new System.Drawing.Size(215, 21);
-            this.colorPicker1.TabIndex = 10;
+            this.cbOuterProfileLineColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOuterProfileLineColor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbOuterProfileLineColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOuterProfileLineColor.FormattingEnabled = true;
+            this.cbOuterProfileLineColor.Location = new System.Drawing.Point(73, 29);
+            this.cbOuterProfileLineColor.Name = "cbOuterProfileLineColor";
+            this.cbOuterProfileLineColor.SelectedValue = System.Drawing.Color.White;
+            this.cbOuterProfileLineColor.Size = new System.Drawing.Size(215, 21);
+            this.cbOuterProfileLineColor.TabIndex = 10;
             // 
             // FormDxfSettings
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 351);
+            this.ClientSize = new System.Drawing.Size(325, 383);
             this.ControlBox = false;
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -410,9 +435,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private Custom_Controls.ColorComboBox colorPicker1;
-        private Custom_Controls.LineTypeComboBox lineTypeComboBox1;
+        private System.Windows.Forms.TextBox tbOuterProfileLayer;
+        private Custom_Controls.ColorComboBox cbOuterProfileLineColor;
+        private Custom_Controls.LineTypeComboBox cbOuterProfileLineType;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private Custom_Controls.LineTypeComboBox lineTypeComboBox2;
@@ -429,5 +454,7 @@
         private System.Windows.Forms.Label label9;
         private Custom_Controls.ColorComboBox colorComboBox2;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
