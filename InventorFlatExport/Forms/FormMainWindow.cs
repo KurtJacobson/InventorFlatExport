@@ -1,4 +1,4 @@
-﻿// MetalForming Inc.
+// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -13,9 +13,6 @@ using Inventor;
 using IxMilia;
 using IxMilia.Dxf;
 using IxMilia.Dxf.Entities;
-
-using InventorFlatExport.Custom_Controls;
-
 
 
 namespace InventorFlatExport
@@ -41,12 +38,9 @@ namespace InventorFlatExport
             InitInventor(btn);
         }
 
-
         private string colorToRgb(System.Drawing.Color color)
         {
-
-            return String.Format("{0};{1};{2}", color.R, color.G, color.B);
-
+            return String.Format("{0};{1};{2}", color.R, color.G, color.B);    
         }
 
 
@@ -77,8 +71,6 @@ namespace InventorFlatExport
             //}).Start();
 
         }
-
-
 
         private void PopulateTreeView()
         {
