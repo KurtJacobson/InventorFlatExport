@@ -127,6 +127,31 @@ namespace InventorFlatExport.Custom_Controls
                 }
             }
         }
+        public Color SelectedColor
+        {
+            get
+            {
+                if (SelectedIndex >= 0)
+                    return SelectedItem.Color;
+                return Color.White;
+            }
+            set
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    if (((ColorInfo)Items[i]).Color == value)
+                    {
+                        SelectedIndex = i;
+                        return;
+                    }
+                }
+
+                // The color was not in the list, must be custom
+                var colorName = String.Format("Custom ({0}, {1}, {2})", value.R, value.G, value.B);
+                Items.Insert(Items.Count - 1, new ColorInfo(colorName, value));
+                SelectedIndex = Items.Count - 2;
+            }
+        }
 
         public new Color SelectedValue
         {
@@ -154,14 +179,15 @@ namespace InventorFlatExport.Custom_Controls
 
             if (SelectedItem.Text == "Custom Color...")
             {
+                // Open ColorDialog to select custom color 
                 this.colorChooser = new ColorDialog();
-                this.colorChooser.ShowDialog();
+                if (this.colorChooser.ShowDialog() == DialogResult.OK)
+                {
+                    SelectedColor = this.colorChooser.Color;
+                }
             }
         }
 
     }
 
 }
-
-
-
