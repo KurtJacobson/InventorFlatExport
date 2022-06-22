@@ -1,4 +1,4 @@
-﻿// MetalForming Inc.
+// MetalForming Inc.
 // Copyright (c) 2022 All Rights Reserved
 // Author: Kurt Jacobson
 // Date: 04/28/2022
@@ -58,7 +58,6 @@ namespace InventorFlatExport
                 MessageBox.Show("Make sure AutoDesk Inventor is installed and running.", "Inventor Error!");
                 return;
             }
-
             
             PopulateTreeView();
 
@@ -69,7 +68,6 @@ namespace InventorFlatExport
             //    Thread.CurrentThread.IsBackground = true;
             //    ExportFlatDXF(oDoc);
             //}).Start();
-
         }
 
         private void PopulateTreeView()
@@ -123,20 +121,14 @@ namespace InventorFlatExport
                         partDict[partId] = new SheetmetalPart(doc);
                     }
                 }
-
             }
 
             treeView1.EndUpdate();
             treeView1.ExpandAll();
-
         }
 
-
-
         private void ExportFlatDXF(PartDocument oDoc)
-
         {
-
             SheetMetalComponentDefinition smCompDef = null;
 
             if (oDoc == null)
@@ -243,18 +235,16 @@ namespace InventorFlatExport
                 // ToDo: Find a better way to get the Outline layer
                 foreach (DxfLayer layer in file.Layers) {
 
-                    if (layer.Name == "Outline") {
-
+                    if (layer.Name == "Outline")
+                    {
                         // add XData with product info
-                        layer.XData["POS3000_V3_PRODUCT"] = new DxfXDataApplicationItemCollection(
+                        layer.XData["POS3000_V3_PRODUCT"] = new DxfXDataApplicationItemCollection
+                        (
                             new DxfXDataString(String.Format("Thickness={0:F4}", sheetThickness)),
                             new DxfXDataString(String.Format("MaterialId=({0})", materialName))
                         );
-
                     }
-
                 }
-
 
                 var bUpLineColor = Properties.DxfSettings.Default.BendUpLayerColor.ToArgb();
                 var bDownLineColor = Properties.DxfSettings.Default.BendDownLayerColor.ToArgb();
@@ -265,7 +255,6 @@ namespace InventorFlatExport
                 dashedLineType.Elements.Add(new DxfLineTypeElement() { DashDotSpaceLength = .5});
                 dashedLineType.Elements.Add(new DxfLineTypeElement() { DashDotSpaceLength = .25});
                 file.LineTypes.Add(dashedLineType);
-
 
                 foreach (FlatBendResult oBend in fPatt.FlatBendResults) {
 
@@ -330,7 +319,6 @@ namespace InventorFlatExport
 
                     // add bend line to DXF
                     file.Entities.Add(bLine);
- 
                 }
 
                 // safe DXF file
@@ -338,9 +326,7 @@ namespace InventorFlatExport
 
                 // restore original units of measure
                 oDoc.UnitsOfMeasure.LengthUnits = originalUnits.LengthUnits;
-
             }
-
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -366,7 +352,7 @@ namespace InventorFlatExport
 
             if (partDict.TryGetValue(selectedNode.Name, out SheetmetalPart part))
             {
-                ExportFlatDXF(part.Document);
+               ExportFlatDXF(part.Document);
             }
         }
 
@@ -420,5 +406,4 @@ public class SheetmetalPart
         get { return this.occurances; }
         set { this.occurances = value; }
     }
-
 }

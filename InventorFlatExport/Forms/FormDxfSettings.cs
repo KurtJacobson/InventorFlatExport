@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +16,9 @@ namespace InventorFlatExport
         public FormDxfSettings()
         {
             InitializeComponent();
+
+            // Make form window fixed size
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
 
             var settings = Properties.DxfSettings.Default;
 

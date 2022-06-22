@@ -1,4 +1,4 @@
-﻿namespace InventorFlatExport
+namespace InventorFlatExport
 {
     partial class FormDxfSettings
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDxfSettings));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -345,6 +346,7 @@
             this.colorComboBox2.FormattingEnabled = true;
             this.colorComboBox2.Location = new System.Drawing.Point(73, 29);
             this.colorComboBox2.Name = "colorComboBox2";
+            this.colorComboBox2.SelectedColor = System.Drawing.Color.White;
             this.colorComboBox2.SelectedValue = System.Drawing.Color.White;
             this.colorComboBox2.Size = new System.Drawing.Size(215, 21);
             this.colorComboBox2.TabIndex = 10;
@@ -369,6 +371,7 @@
             this.colorComboBox1.FormattingEnabled = true;
             this.colorComboBox1.Location = new System.Drawing.Point(73, 29);
             this.colorComboBox1.Name = "colorComboBox1";
+            this.colorComboBox1.SelectedColor = System.Drawing.Color.White;
             this.colorComboBox1.SelectedValue = System.Drawing.Color.White;
             this.colorComboBox1.Size = new System.Drawing.Size(215, 21);
             this.colorComboBox1.TabIndex = 10;
@@ -393,6 +396,7 @@
             this.cbOuterProfileLineColor.FormattingEnabled = true;
             this.cbOuterProfileLineColor.Location = new System.Drawing.Point(73, 29);
             this.cbOuterProfileLineColor.Name = "cbOuterProfileLineColor";
+            this.cbOuterProfileLineColor.SelectedColor = System.Drawing.Color.White;
             this.cbOuterProfileLineColor.SelectedValue = System.Drawing.Color.White;
             this.cbOuterProfileLineColor.Size = new System.Drawing.Size(215, 21);
             this.cbOuterProfileLineColor.TabIndex = 10;
@@ -409,6 +413,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormDxfSettings";
