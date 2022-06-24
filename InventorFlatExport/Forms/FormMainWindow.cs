@@ -75,6 +75,7 @@ namespace InventorFlatExport
             if (inventor == null) return;
 
             Document actDoc = inventor.ActiveDocument;
+            if (actDoc == null) return;
 
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
