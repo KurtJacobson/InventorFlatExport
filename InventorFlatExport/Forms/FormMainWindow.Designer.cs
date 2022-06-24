@@ -235,7 +235,7 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Inventor Parts";
             // 
-            // Form1
+            // FormMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -247,10 +247,13 @@
             this.Controls.Add(this.partNameLabel);
             this.Controls.Add(this.buttonRefreshViwer);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Inventor DXF Exporter";
+            this.MaximizeBox = false;
+            this.Name = "FormMainWindow";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "Inventor DXF Export";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
