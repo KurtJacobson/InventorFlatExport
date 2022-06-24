@@ -208,7 +208,8 @@ namespace InventorFlatExport
                             ;
 
                 string dxfOutName = System.IO.Path.GetFileNameWithoutExtension(oDoc.DisplayName) + ".dxf";
-                string dxfOutDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+                //string dxfOutDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+                string dxfOutDir = System.IO.Path.GetDirectoryName(oDoc.FullFileName);
                 string dxfOutPath = System.IO.Path.Combine(dxfOutDir, dxfOutName);
 
                 DataIO oDataIO = oDoc.ComponentDefinition.DataIO;
