@@ -49,10 +49,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>8AC0189B5BE11667FBE17FE436C7139FA1A18F54</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C9C583DBDD7B48438B0FA670E7BA916267EA790B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>InventorFlatExport_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>InventorFlatExport_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -142,6 +142,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="InventorFlatExport_1_TemporaryKey.pfx" />
     <None Include="InventorFlatExport_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
