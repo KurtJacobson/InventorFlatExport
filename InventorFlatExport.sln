@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventorFlatExport", "InventorFlatExport\InventorFlatExport.csproj", "{F5BE5603-5C15-4015-8010-92C824D502E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventorStpExport", "..\InventorStpExport\InventorStpExport\InventorStpExport.csproj", "{FE9AEDAD-73BF-4CF6-A855-6F6E7761DC47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F5BE5603-5C15-4015-8010-92C824D502E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5BE5603-5C15-4015-8010-92C824D502E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5BE5603-5C15-4015-8010-92C824D502E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9AEDAD-73BF-4CF6-A855-6F6E7761DC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9AEDAD-73BF-4CF6-A855-6F6E7761DC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9AEDAD-73BF-4CF6-A855-6F6E7761DC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9AEDAD-73BF-4CF6-A855-6F6E7761DC47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
