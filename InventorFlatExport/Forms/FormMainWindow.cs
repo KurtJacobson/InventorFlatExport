@@ -120,6 +120,8 @@ namespace InventorFlatExport
                         TreeNode newNode = node.Nodes.Add(doc.DisplayName);
                         newNode.Name = partId;
                         partDict[partId] = new SheetmetalPart(doc);
+
+                        doc.DocumentEvents.OnClose += DocumentEvents_OnClose;
                     }
                 }
             }
@@ -329,6 +331,11 @@ namespace InventorFlatExport
                 // restore original units of measure
                 oDoc.UnitsOfMeasure.LengthUnits = originalUnits.LengthUnits;
             }
+        }
+
+        private void DocumentEvents_OnClose(EventTimingEnum BeforeOrAfter, NameValueMap Context, out HandlingCodeEnum HandlingCode)
+        {
+            throw new NotImplementedException();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
