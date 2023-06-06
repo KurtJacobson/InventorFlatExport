@@ -320,7 +320,9 @@ namespace InventorFlatExport
                     // add XData with bend info
                     bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
                         new DxfXDataString(String.Format("BendAngleDeg={0:F3}", bAngle)),
-                        new DxfXDataString(String.Format("InnerRadius={0:F4}", bRadius))
+                        new DxfXDataString(String.Format("InnerRadius={0:F4}", bRadius)),
+                        new DxfXDataString(String.Format("K_Factor={0:F3}", .1))
+                        //new DxfXDataString(String.Format("BendShortening=-.5"))
                     );
 
                     // add bend line to DXF
