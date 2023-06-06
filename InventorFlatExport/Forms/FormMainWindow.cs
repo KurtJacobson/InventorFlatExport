@@ -90,6 +90,8 @@ namespace InventorFlatExport
                 TreeNode newNode = treeView1.Nodes.Add(doc.DisplayName);
                 newNode.Name = partId;
                 partDict[partId] = new SheetmetalPart(doc);
+
+                doc.DocumentEvents.OnClose += DocumentEvents_OnClose;
             }
 
 
@@ -335,6 +337,7 @@ namespace InventorFlatExport
 
         private void DocumentEvents_OnClose(EventTimingEnum BeforeOrAfter, NameValueMap Context, out HandlingCodeEnum HandlingCode)
         {
+            MessageBox.Show("The document was closed");
             throw new NotImplementedException();
         }
 
