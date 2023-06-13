@@ -136,6 +136,16 @@ namespace InventorFlatExport
         {
             SheetMetalComponentDefinition smCompDef = null;
 
+            UnitsOfMeasure docUnits = oDoc.UnitsOfMeasure;
+            string uString = docUnits.GetStringFromType(docUnits.LengthUnits);
+
+            // convert from internal units (CM) to document units
+            double toDocUnits(double value)
+            {
+                return docUnits.ConvertUnits(value, UnitsTypeEnum.kCentimeterLengthUnits, docUnits.LengthUnits);
+            }
+
+
             if (oDoc == null)
             {
                 MessageBox.Show("Part document is null.", "Export error!");
@@ -157,6 +167,41 @@ namespace InventorFlatExport
                     MessageBox.Show("The selected item is not a valid Sheetmetal component.", "Export Error!");
                     return;
                 }
+
+                SheetMetalFeatures smFeatures = (SheetMetalFeatures)smCompDef.Features;
+
+                foreach (FlangeFeature fFeature in smFeatures.FlangeFeatures)
+                {
+
+                    UnfoldMethod ufMethod = fFeature.Definition.UnfoldMethod;
+
+                    double bRadius = fFeature.Definition.BendRadius.Value;
+                    Edge fEdge = fFeature.Definition.Edges[1];
+
+
+                    Point startPoint = fEdge.StartVertex.Point;
+                    Point stopPoint = fEdge.StopVertex.Point;
+
+                    // bend start and end points
+                    var x1 = toDocUnits(startPoint.X);
+                    var y1 = toDocUnits(startPoint.Y);
+                    var x2 = toDocUnits(stopPoint.X);
+                    var y2 = toDocUnits(stopPoint.Y);
+
+                    double bLength = Math.Sqrt( Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+                    MessageBox.Show(bLength.ToString(), "Bend Length");
+
+
+                    //ufMethod.SetEquation(0,
+                    //    UnfoldMethodEquationTypeEnum.kBendDeductionEquationType,
+                         
+
+                      //  );
+
+
+                }
+
 
                 // Unfold if we don't already have a flat pattern
                 if (!smCompDef.HasFlatPattern)
@@ -219,20 +264,11 @@ namespace InventorFlatExport
                 DataIO oDataIO = oDoc.ComponentDefinition.DataIO;
                 oDataIO.WriteDataToFile(sOut, dxfOutPath);
 
-                UnitsOfMeasure docUnits = oDoc.UnitsOfMeasure;
-                string uString = docUnits.GetStringFromType(docUnits.LengthUnits);
-
-
                 // read DXF and add bend lines
                 var file = DxfFile.Load(dxfOutPath);
                 file.Header.Version = DxfAcadVersion.R2007;
                 file.ApplicationIds.Add(new DxfAppId("POS3000_V3_PRODUCT"));
                 file.ApplicationIds.Add(new DxfAppId("POS3000_V3_BENDINGLINE"));
-
-                // convert from internal units (CM) to document units
-                double toDocUnits(double value) {
-                    return docUnits.ConvertUnits(value, UnitsTypeEnum.kCentimeterLengthUnits, docUnits.LengthUnits);
-                }
 
                 // get sheet thickness from model
                 var sheetThickness = toDocUnits(smCompDef.Thickness.Value);
@@ -317,7 +353,7 @@ namespace InventorFlatExport
                     bLine.Color24Bit = bLineColor;
                     bLine.Layer = "BendingLines";
 
-                    // add XData with bend info
+                    // add xData with bend info
                     bLine.XData["POS3000_V3_BENDINGLINE"] = new DxfXDataApplicationItemCollection(
                         new DxfXDataString(String.Format("BendAngleDeg={0:F3}", bAngle)),
                         new DxfXDataString(String.Format("InnerRadius={0:F4}", bRadius)),
@@ -329,7 +365,7 @@ namespace InventorFlatExport
                     file.Entities.Add(bLine);
                 }
 
-                // safe DXF file
+                // save DXF file
                 file.Save(dxfOutPath);
 
                 // restore original units of measure
