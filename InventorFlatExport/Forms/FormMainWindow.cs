@@ -329,7 +329,7 @@ namespace InventorFlatExport
                     file.Entities.Add(bLine);
                 }
 
-                // safe DXF file
+                // save DXF file
                 file.Save(dxfOutPath);
 
                 // restore original units of measure
